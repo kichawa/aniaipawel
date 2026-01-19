@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nasze Wesele</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg1: #f8f5f2;
+  --bg2: #efe9e4;
+  --text: #4a3f35;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  color: var(--text);
+}
+
+/* === LAYOUT === */
+.hero {
+  //min-height: 100svh;
+  //min-height: 900px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 680px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 22px;
+  padding: clamp(28px, 5vw, 50px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  text-align: center;
+  animation: fadeIn 1.2s ease;
+}
+
+/* === TYPO === */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 6vw, 44px);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: clamp(15px, 3.5vw, 18px);
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+}
+
+.date {
+  font-size: clamp(16px, 4vw, 20px);
+  font-weight: 500;
+  margin-bottom: 32px;
+}
+
+/* === COUNTDOWN === */
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.time-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.time-box span {
+  display: block;
+  font-size: clamp(26px, 6vw, 34px);
+  font-weight: 600;
+}
+
+.time-box small {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* === FOOTER === */
+.footer {
+  margin-top: 36px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* === DESKTOP === */
+@media (min-width: 768px) {
+  .countdown {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* === ANIM === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+<section class="hero">
+  <div class="card">
+    <h1>Anna & Paweł</h1>
+    <div class="subtitle">Bierzemy ślub</div>
+
+    <div class="date">25 kwietnia 2026</div>
+
+    <div class="countdown">
+      <div class="time-box">
+        <span id="days">0</span>
+        <small>Dni</small>
+      </div>
+      <div class="time-box">
+        <span id="hours">0</span>
+        <small>Godzin</small>
+      </div>
+      <div class="time-box">
+        <span id="minutes">0</span>
+        <small>Minut</small>
+      </div>
+      <div class="time-box">
+        <span id="seconds">0</span>
+        <small>Sekund</small>
+      </div>
+    </div>
+
+    <div class="footer">
+      Do zobaczenia na naszym weselu 🤍
+    </div>
+  </div>
+</section>
+
+<script>
+const weddingDate = new Date("2026-04-25T15:00:00").getTime();
+
+setInterval(() => {
+  const now = new Date().getTime();
+  const diff = weddingDate - now;
+  if (diff < 0) return;
+
+  document.getElementById("days").innerText =
+    Math.floor(diff / (1000 * 60 * 60 * 24));
+  document.getElementById("hours").innerText =
+    Math.floor((diff / (1000 * 60 * 60)) % 24);
+  document.getElementById("minutes").innerText =
+    Math.floor((diff / (1000 * 60)) % 60);
+  document.getElementById("seconds").innerText =
+    Math.floor((diff / 1000) % 60);
+}, 1000);
+</script>
+</body>
+</html>
